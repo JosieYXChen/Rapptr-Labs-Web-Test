@@ -24,7 +24,7 @@ const Login = () => {
       <h1>Rapptr Labs</h1>
       <form onSubmit={handleSubmit}>
         <div className="field">
-          <label>Email</label>
+          <label><text>Email</text></label>
           <div className="wrapper">
             <i className="fas fa-user icon"></i>
             <input name="email" type="email" value={email} required placeholder="user@rapptrlabs.com" onChange={handleChange}></input>
