@@ -1,7 +1,7 @@
 import './Login.css';
 
-function Login() {
-  return (<h1>Is it working?</h1>
+const Login = () => {
+  return (<h1>this is Login page</h1>
     )
 }
 

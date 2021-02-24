@@ -2,11 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Login from './Login';
+import List from './List';
 import reportWebVitals from './reportWebVitals';
+import { HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route path="/list" component={List} />
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
