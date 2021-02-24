@@ -1,0 +1,23 @@
+.max-width {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.login {
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login .field input {
+  width: 100%;
+  padding-left: 20px;
+}
+
+.login .field .icon {
+  position: absolute;
+  margin: 2px auto auto 3px;
+}
