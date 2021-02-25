@@ -20,25 +20,29 @@ const Login = () => {
   }
 
   return (<div className="max-width">
-    <div className="login">
-      <h1>Rapptr Labs</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="field">
-          <label><text>Email</text></label>
-          <div className="wrapper">
-            <i className="fas fa-user icon"></i>
-            <input name="email" type="email" value={email} required placeholder="user@rapptrlabs.com" onChange={handleChange}></input>
-          </div>
+    <div className="center">
+      <div className="login">
+        <h1>Rapptr Labs</h1>
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <div className="field">
+              <label><text>Email</text></label>
+              <div className="wrapper">
+                <i className="fas fa-user icon"></i>
+                <input name="email" type="email" value={email} required placeholder="user@rapptrlabs.com" onChange={handleChange}></input>
+              </div>
+            </div>
+            <div className="field">
+              <label>Password</label>
+              <div className="wrapper">
+                <i className="fas fa-lock icon"></i>
+                <input name="password" type="text" value={password} required placeholder="Must be at least 4 characters" onChange={handleChange}></input>
+              </div>
+            </div>
+            <button type="submit" disabled={submitted} >Login</button>
+          </form>
         </div>
-        <div className="field">
-          <label>Password</label>
-          <div className="wrapper">
-            <i className="fas fa-lock icon"></i>
-            <input name="password" type="text" value={password} required placeholder="Must be at least 4 characters" onChange={handleChange}></input>
-          </div>
-        </div>
-        <button type="submit" disabled={submitted} >Login</button>
-      </form>
+      </div>
     </div>
   </div>)
 }
