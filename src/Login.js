@@ -56,7 +56,7 @@ const Login = () => {
   return (<div className="max-width">
     <div className="center">
       <div className="login">
-        <h1>Rapptr Labs</h1>
+        <h1 className="title">Rapptr Labs</h1>
         <div className="container">
           <form onSubmit={handleSubmit}>
             <div className="field">
