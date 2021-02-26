@@ -1,5 +1,6 @@
 import './Login.css';
 import { useState } from 'react';
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -7,7 +8,6 @@ const Login = () => {
   const [submitted, setSubmitted] = useState(false);
   const [emailErr, setEmailErr] = useState('');
   const [passwordErr, setPasswordErr] = useState('');
-  // const [isValid, setValid] = useState(false);
 
   const handleChange = (event) => {
     if(event.target.name === "email") setEmail(event.target.value);
@@ -28,13 +28,16 @@ const Login = () => {
     }
   }
 
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    setEmail('');
-    setPassword('');
-    setSubmitted(true);
+      setEmail('');
+      setPassword('');
+      setSubmitted(true);
+    } catch(err) {
+      console.log("failed to submit form")
+    }
   }
 
 
