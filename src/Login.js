@@ -31,6 +31,20 @@ const Login = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
+      const response = await axios({
+        method: "post",
+        url: "http://dev.rapptrlabs.com/Tests/scripts/user-login.php",
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
+        },
+        data: {
+          email,
+          password,
+        }
+      })
+      console.log(response);
 
       setEmail('');
       setPassword('');
@@ -39,8 +53,6 @@ const Login = () => {
       console.log("failed to submit form")
     }
   }
-
-
 
   return (<div className="max-width">
     <div className="center">
