@@ -62,13 +62,17 @@
   border-radius: 6px;
 }
 
+.login .field .invalid {
+  border: 2.5px solid red;
+}
+
 .login .field .icon {
   font-size: 20px;
   position: absolute;
   margin: 5px auto auto 5px;
 }
 
-.login button {
+.login .button {
   height: 35px;
   width: 100%;
   background: #1d3557;
@@ -76,11 +80,26 @@
   font-size: 20px;
   font-weight: 600;
   border: 2px solid #1d3557;
+  cursor: pointer;
   border-radius: 6px;
+  box-shadow: 0 0 5px white;
   transition: all 0.3s ease;
 }
 
-/* .login button:hover {
+.login #invalidBtn {
+  opacity: 0.5;
+}
+
+.login #disabledBtn {
+  background: gray;
+}
+
+.login .button:hover {
   background: white;
   color: #1d3557;
-} */
+}
+
+.login .field .err-message {
+  margin-top: 2px;
+  color: rgb(221, 148, 148);
+}
