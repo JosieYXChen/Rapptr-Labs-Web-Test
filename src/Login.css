@@ -54,7 +54,7 @@
   margin-bottom: 2px;
 }
 
-.login .field input {
+.wrapper input {
   width: calc(100% - 35px);
   padding-left: 30px;
   height: 25px;
@@ -66,13 +66,13 @@
   border: 2.5px solid red;
 }
 
-.login .field .icon {
+.icon {
   font-size: 20px;
   position: absolute;
   margin: 5px auto auto 5px;
 }
 
-.login .button {
+.button {
   height: 35px;
   width: 100%;
   background: #1d3557;
@@ -94,7 +94,7 @@
   background: gray;
 }
 
-.login .button:hover {
+.button:hover {
   background: white;
   color: #1d3557;
 }

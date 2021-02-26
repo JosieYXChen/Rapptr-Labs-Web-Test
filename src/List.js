@@ -18,22 +18,27 @@ const List = () => {
     setListLen(todos.length);
   },[listLen])
 
+
+
   return (
     <div className="max-width">
-      <button type="button" className="logout-btn">Logout</button>
+      <button type="button" className="logout-btn button">Logout</button>
       <div className="center">
-        <div className="List">
+        <div className="list">
           <h1 className="title">My To-Do List</h1>
           <div className="container">
             <div className="search-add">
-              <input placeholder="search"></input>
-              <button type="button" className="add-btn">New</button>
+              <div className="wrapper">
+                <i className="fas fa-search icon"></i>
+                <input placeholder="search" maxLength="25" minLength="1"></input>
+              </div>
+              <button type="button" className="button" id="add-btn">New</button>
             </div>
             <div className="list-items">
                 {todos.length > 0 && todos.map((todo, idx) => {
                   return (<div id={`todo${idx}`}>
                     <span className="todo-name">{todo}</span>
-                    <span><i className="fas fa-pencil-alt editBtn"></i><i className="fas fa-trash-alt deleteBtn"></i></span>
+                    <span><i className="fas fa-pencil-alt edit-btn"></i><i className="fas fa-trash-alt delete-btn"></i></span>
                   </div>)
                 })}
             </div>

@@ -1,0 +1,37 @@
+.max-width .logout-btn {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  height: 2.5rem;
+  width: 5rem;
+  font-size: 1rem;
+  border-radius: 6%;
+}
+
+.list .container {
+  background-color: white;
+  min-height: 480px;
+  min-width: 320px;
+  padding: 5px 5px 5px 5px;
+  border-radius: 2%;
+}
+
+.search-add {
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-add .wrapper {
+  flex: 0 0 60%;
+}
+
+.search-add .wrapper .search {
+  height: 100%;
+  width: 100%;
+}
+
+.search-add #add-btn {
+  flex: 0 0 20%;
+  height: 100%;
+  width: 100%;
+}
