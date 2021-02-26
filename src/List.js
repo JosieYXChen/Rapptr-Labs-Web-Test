@@ -36,9 +36,9 @@ const List = () => {
             </div>
             <div className="list-items">
                 {todos.length > 0 && todos.map((todo, idx) => {
-                  return (<div id={`todo${idx}`}>
+                  return (<div id={`todo${idx}`} className="item">
                     <span className="todo-name">{todo}</span>
-                    <span><i className="fas fa-pencil-alt edit-btn"></i><i className="fas fa-trash-alt delete-btn"></i></span>
+                    <span className="icons"><i className="fas fa-pencil-alt edit-btn"></i><i className="fas fa-trash-alt delete-btn"></i></span>
                   </div>)
                 })}
             </div>
