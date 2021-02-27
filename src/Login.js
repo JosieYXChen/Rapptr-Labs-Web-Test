@@ -1,15 +1,17 @@
 import './Login.css';
 import { useState } from 'react';
-import axios from "axios";
+import axios from 'axios';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [emailErr, setEmailErr] = useState('');
-  const [passwordErr, setPasswordErr] = useState('');
+  const [emailErr, setEmailErr] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const [apiErr, setApiErr] = useState("");
 
   const handleChange = (event) => {
+    setApiErr("");
     if(event.target.name === "email") setEmail(event.target.value);
     if(event.target.name === "password") setPassword(event.target.value);
     verifyFields(event.target.value, event.target.name)
@@ -31,25 +33,21 @@ const Login = () => {
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
-      const response = await axios({
-        method: "post",
-        url: "/api/login",
-        // headers: {
-        //   'Access-Control-Allow-Origin': '*',
-        //   'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-        //   'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-        // },
-        data: {
-          email,
-          password,
-        }
+      setSubmitted(true);
+      const { data: response } = await axios.post("/api/login", {
+        email,
+        password,
       })
+
+      if(!response) setApiErr('The server could not be reached. Please try again later');
+
+      console.log(response);
 
       setEmail('');
       setPassword('');
-      setSubmitted(true);
+      setSubmitted(false);
     } catch(err) {
-      console.log("failed to submit form")
+      console.log("failed to submit form", err)
     }
   }
 
@@ -71,11 +69,12 @@ const Login = () => {
               <label>Password</label>
               <div className="wrapper">
                 <i className="fas fa-lock icon"></i>
-                <input className={passwordErr && password && "invalid"} name="password" type="text" value={password} required placeholder="Must be at least 4 characters" minLength="4" maxLength="16" onChange={handleChange}></input>
+                <input className={passwordErr && password && "invalid"} name="password" type="password" value={password} required placeholder="Must be at least 4 characters" minLength="4" maxLength="16" onChange={handleChange}></input>
                 {passwordErr && <div className="err-message">{passwordErr}</div>}
               </div>
             </div>
             <button type="submit" disabled={submitted} className="button" id={(submitted && "disabledBtn") || (( emailErr|| passwordErr ) && "invalidBtn")}>{ submitted? <i className="fas fa-spinner"></i>:"Login"}</button>
+            {apiErr && <div className="err-message">{apiErr}</div>}
           </form>
         </div>
       </div>

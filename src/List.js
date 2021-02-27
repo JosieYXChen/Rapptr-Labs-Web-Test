@@ -22,7 +22,7 @@ const List = () => {
   },[listLen, editMode, searchWord])
 
   const handleAdd = () => {
-    setAddMode(true);
+    setAddMode(!addMode);
   }
 
   const handleEdit = () => {

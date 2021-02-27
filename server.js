@@ -3,6 +3,7 @@ const morgan = require("morgan")
 const path = require('path')
 const bodyParser = require('body-parser')
 const http = require('http');
+const request = require('request');
 const app = express();
 module.exports = app;
 
@@ -21,21 +22,26 @@ app.use((req, res, next) => {
   next();
 })
 
-app.get('/api', (req, res, next) => {
-  res.send('hello world');
-})
+app.post('/api/login', async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    console.log(email, password, "server");
 
-app.post('/api/login', (req, res, next) => {
-  const { email, password } = req.body;
-  const options = {
-    method: 'POST'
-  };
-  http.request("http://dev.rapptrlabs.com/Tests/scripts/user-login.php", options, (res) => {
-    console.log("is this running?")
-    res.on('data', (data) => {
-      console.log(data);
+    const options = {
+      uri: 'http://dev.rapptrlabs.com/Tests/scripts/user-login.php',
+      form: {
+        email,
+        password
+      }
+    }
+
+    request.post(options, (err, httpResponse, body) => {
+      if(err) return console.error("upload failed:", err);
+      res.json(body);
     })
-  })
+  } catch(err){
+    console.log("failed to post form to api", err);
+  }
 })
 
 // when no route found, get the index.html
