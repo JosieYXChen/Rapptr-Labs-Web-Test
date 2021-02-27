@@ -44,10 +44,8 @@ const Login = () => {
 
       if(JSON.stringify(response).includes("user_id")) history.push('/list');
       else {
-        setApiErr('Failed to log in');
+        setApiErr('Failed to log in. Check your email and password, or try log in later.');
       }
-      setEmail('');
-      setPassword('');
       setSubmitted(false);
     } catch(err) {
       console.log("failed to submit form", err)

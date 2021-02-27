@@ -99,7 +99,7 @@
   color: #1d3557;
 }
 
-.login .field .err-message {
+.err-message {
   margin-top: 2px;
   color: rgb(221, 148, 148);
 }
