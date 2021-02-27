@@ -2,39 +2,35 @@ import './List.css';
 import { useState, useEffect } from 'react';
 import ToDoForm from './ToDoForm';
 
-
-const seedDummyData = () => {
-  window.localStorage.setItem('todos', JSON.stringify([ "Workout", "Pay bills", "Get lunch"]));
-}
-
 const List = () => {
   const [editMode, setEditMode] = useState(false);
   const [addMode, setAddMode] = useState(false);
   const [todos, setTodos] = useState([]);
   const [listLen, setListLen] = useState(0);
   const [edit, setEdit] = useState("");
-  const [editIdx, setEditIdx] = useState(-1)
+  const [editIdx, setEditIdx] = useState(-1);
+  const [searchWord, setSearchWord] = useState("");
 
   useEffect(()=> {
-    // seedDummyData();
-    // window.localStorage.clear();
     const storedData = window.localStorage.getItem("todos");
     if(storedData) {
       setTodos(JSON.parse(storedData));
       setListLen(todos.length);
     }
-    console.log(todos, "useEffect");
-  },[listLen, editMode])
+  },[listLen, editMode, searchWord])
 
   const handleAdd = () => {
     setAddMode(true);
   }
 
+  const handleEdit = () => {
+    setEditMode(true);
+  }
+
   const handleSave = () => {
     const formatted = edit[0].toUpperCase() + edit.slice(1);
     if(addMode) todos.unshift(formatted);
-    if(editMode) todos.splice(editIdx, 1, edit);
-    console.log(todos);
+    if(editMode) todos.splice(editIdx, 1, formatted);
     window.localStorage.setItem('todos', JSON.stringify(todos));
 
     setEdit("");
@@ -48,12 +44,9 @@ const List = () => {
     }
   }
 
-  const handleEdit = () => {
-    setEditMode(true);
-  }
-
   const handleChange = (event) => {
-    setEdit(event.target.value);
+    if(event.target.name === "edit") setEdit(event.target.value);
+    if(event.target.name === "search") setSearchWord(event.target.value.toLowerCase())
   }
 
   const handleClick = (event) => {
@@ -81,13 +74,14 @@ const List = () => {
             <div className="search-add">
               <div className="wrapper">
                 <i className="fas fa-search icon"></i>
-                <input placeholder="search" maxLength="25" minLength="1"></input>
+                <input name="search" placeholder="search" maxLength="25" minLength="1" value={searchWord} onChange={handleChange}></input>
               </div>
               <button type="button" className="button" id="add-btn" onClick={handleAdd}>New</button>
             </div>
             <div className="list-items">
               {addMode && <ToDoForm edit={edit} handleChange={handleChange} handleSave={handleSave}/>}
               {todos.length > 0 && todos.map((todo, idx) => {
+                if (searchWord && !todo.toLowerCase().includes(searchWord)) return null;
                 if (editMode && idx === editIdx) {
                   return <ToDoForm key={`todo${idx}`} edit={edit} handleChange={handleChange} handleSave={handleSave}/>}
                 else return (
