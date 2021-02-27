@@ -1,5 +1,6 @@
 import './List.css';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import ToDoForm from './ToDoForm';
 
 const List = () => {
@@ -10,6 +11,7 @@ const List = () => {
   const [edit, setEdit] = useState("");
   const [editIdx, setEditIdx] = useState(-1);
   const [searchWord, setSearchWord] = useState("");
+  const [errMessage, setErrMessage] = useState("");
 
   useEffect(()=> {
     const storedData = window.localStorage.getItem("todos");
@@ -28,6 +30,10 @@ const List = () => {
   }
 
   const handleSave = () => {
+    if(!edit) {
+      setErrMessage("Please enter a valid todo item");
+      return;
+    }
     const formatted = edit[0].toUpperCase() + edit.slice(1);
     if(addMode) todos.unshift(formatted);
     if(editMode) todos.splice(editIdx, 1, formatted);
@@ -45,16 +51,19 @@ const List = () => {
   }
 
   const handleChange = (event) => {
-    if(event.target.name === "edit") setEdit(event.target.value);
+    if(event.target.name === "edit") {
+      setEdit(event.target.value);
+      if(edit.length > 0 && edit.length < 25) setErrMessage("");
+    }
     if(event.target.name === "search") setSearchWord(event.target.value.toLowerCase())
   }
 
   const handleClick = (event) => {
     const btnId = event.target.id;
-    const [btnType, idx] = btnId.split('-');
+    const [btnType, idx] = btnId.split("-");
     if(btnType === "delete"){
       const update = todos.filter((todo, index)=> index !== Number(idx));
-      window.localStorage.setItem('todos', JSON.stringify(update))
+      window.localStorage.setItem("todos", JSON.stringify(update))
       setListLen(listLen - 1);
     } else {
       handleEdit();
@@ -66,7 +75,7 @@ const List = () => {
 
   return (
     <div className="max-width">
-      <button type="button" className="logout-btn button">Logout</button>
+      <Link to="/"><button type="button" className="logout-btn button">Logout</button></Link>
       <div className="center">
         <div className="list">
           <h1 className="title">My To-Do List</h1>
@@ -74,16 +83,16 @@ const List = () => {
             <div className="search-add">
               <div className="wrapper">
                 <i className="fas fa-search icon"></i>
-                <input name="search" placeholder="search" maxLength="25" minLength="1" value={searchWord} onChange={handleChange}></input>
+                <input name="search" placeholder="search" value={searchWord} onChange={handleChange}></input>
               </div>
               <button type="button" className="button" id="add-btn" onClick={handleAdd}>New</button>
             </div>
-            <div className="list-items">
-              {addMode && <ToDoForm edit={edit} handleChange={handleChange} handleSave={handleSave}/>}
+            <div className="list-items" style={{overflowY: "scroll"}}>
+              {addMode && <ToDoForm edit={edit} handleChange={handleChange} handleSave={handleSave} errMessage={errMessage}/>}
               {todos.length > 0 && todos.map((todo, idx) => {
                 if (searchWord && !todo.toLowerCase().includes(searchWord)) return null;
                 if (editMode && idx === editIdx) {
-                  return <ToDoForm key={`todo${idx}`} edit={edit} handleChange={handleChange} handleSave={handleSave}/>}
+                  return <ToDoForm key={`todo${idx}`} edit={edit} handleChange={handleChange} handleSave={handleSave} errMessage={errMessage}/>}
                 else return (
                 <div key={`todo${idx}`} className="item">
                   <span className="todo-name">{todo}</span>

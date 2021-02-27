@@ -62,7 +62,7 @@
   border-radius: 6px;
 }
 
-.login .field .invalid {
+.invalid {
   border: 2.5px solid red;
 }
 
