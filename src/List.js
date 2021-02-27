@@ -10,15 +10,43 @@ const List = () => {
   const [editMode, setEditMode] = useState(false);
   const [todos, setTodos] = useState([]);
   const [listLen, setListLen] = useState(0);
+  const [edit, setEdit] = useState("");
 
   useEffect(()=> {
     // seedDummyData();
     // window.localStorage.clear();
-    if(window.localStorage.todos) setTodos(JSON.parse(window.localStorage.getItem('todos')));
-    setListLen(todos.length);
+    const storedData = window.localStorage.getItem("todos");
+    if(storedData) {
+      setTodos(JSON.parse(storedData));
+      setListLen(todos.length);
+    }
+    console.log(todos, "useEffect");
   },[listLen])
 
+  const handleAdd = () => {
+    setEditMode(true);
 
+  }
+
+  const handleEdit = () => {
+
+  }
+
+  const handleClick = (event) => {
+    const btnId = event.target.id;
+    const [btnType, idx] = btnId.split('-');
+    if(btnType === "delete"){
+      const update = todos.filter((todo, index)=> index !== Number(idx));
+      window.localStorage.setItem('todos', JSON.stringify(update))
+      setListLen(listLen - 1);
+      console.log(todos, update, "handleClick");
+    } else {
+      todos.forEach((todo, index) => console.log(index, idx));
+      console.log(todos);
+    }
+
+
+  }
 
   return (
     <div className="max-width">
@@ -36,9 +64,10 @@ const List = () => {
             </div>
             <div className="list-items">
                 {todos.length > 0 && todos.map((todo, idx) => {
-                  return (<div id={`todo${idx}`} className="item">
+                  return (
+                  <div key={`todo${idx}`} className="item">
                     <span className="todo-name">{todo}</span>
-                    <span className="icons"><i className="fas fa-pencil-alt edit-btn"></i><i className="fas fa-trash-alt delete-btn"></i></span>
+                    <span className="icons"><i id={`edit-${idx}`} className="fas fa-pencil-alt edit-btn" onClick={handleClick}></i><i className="fas fa-trash-alt delete-btn" id={`delete-${idx}`} onClick={handleClick}></i></span>
                   </div>)
                 })}
             </div>

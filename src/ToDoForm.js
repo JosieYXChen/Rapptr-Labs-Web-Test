@@ -1,7 +1,13 @@
 import './ToDoForm.css'
 
 const ToDoForm = (props) => {
+
   return (
-    <h1>This is a to-do form</h1>
+    <div className="item">
+      <input className="edit-name"></input>
+      <button type="button">Save</button>
+    </div>
   )
 }
+
+export default ToDoForm;
