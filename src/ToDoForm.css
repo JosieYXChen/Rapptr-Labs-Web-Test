@@ -14,6 +14,9 @@
 .edit-item input {
   flex: 0 0 60%;
   border-radius: 6px;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .edit-item .save-btn {

@@ -31,11 +31,19 @@ const List = () => {
   }
 
   const handleSave = () => {
-
+    todos.unshift(edit);
+    window.localStorage.setItem('todos', JSON.stringify(todos));
+    setListLen(listLen + 1);
+    setEdit("");
+    setAddMode(false);
   }
 
   const handleEdit = () => {
     setEditMode(true);
+  }
+
+  const handleChange = (event) => {
+    setEdit(event.target.value);
   }
 
   const handleClick = (event) => {
@@ -67,7 +75,7 @@ const List = () => {
               <button type="button" className="button" id="add-btn" onClick={handleAdd}>New</button>
             </div>
             <div className="list-items">
-              {addMode && <ToDoForm />}
+              {addMode && <ToDoForm edit={edit} handleChange={handleChange} handleSave={handleSave}/>}
               {todos.length > 0 && todos.map((todo, idx) => {
                 return (
                 <div key={`todo${idx}`} className="item">
