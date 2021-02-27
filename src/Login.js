@@ -1,6 +1,7 @@
 import './Login.css';
 import { useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +10,7 @@ const Login = () => {
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
   const [apiErr, setApiErr] = useState("");
+  const history = useHistory();
 
   const handleChange = (event) => {
     setApiErr("");
@@ -34,15 +36,16 @@ const Login = () => {
     try {
       event.preventDefault();
       setSubmitted(true);
+
       const { data: response } = await axios.post("/api/login", {
         email,
         password,
       })
 
-      if(!response) setApiErr('The server could not be reached. Please try again later');
-
-      console.log(response);
-
+      if(JSON.stringify(response).includes("user_id")) history.push('/list');
+      else {
+        setApiErr('Failed to log in');
+      }
       setEmail('');
       setPassword('');
       setSubmitted(false);
