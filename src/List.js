@@ -13,6 +13,7 @@ const List = () => {
   const [todos, setTodos] = useState([]);
   const [listLen, setListLen] = useState(0);
   const [edit, setEdit] = useState("");
+  const [editIdx, setEditIdx] = useState(-1)
 
   useEffect(()=> {
     // seedDummyData();
@@ -23,19 +24,28 @@ const List = () => {
       setListLen(todos.length);
     }
     console.log(todos, "useEffect");
-  },[listLen])
+  },[listLen, editMode])
 
   const handleAdd = () => {
     setAddMode(true);
-
   }
 
   const handleSave = () => {
-    todos.unshift(edit);
+    const formatted = edit[0].toUpperCase() + edit.slice(1);
+    if(addMode) todos.unshift(formatted);
+    if(editMode) todos.splice(editIdx, 1, edit);
+    console.log(todos);
     window.localStorage.setItem('todos', JSON.stringify(todos));
-    setListLen(listLen + 1);
+
     setEdit("");
-    setAddMode(false);
+    if(addMode) {
+      setListLen(listLen + 1);
+      setAddMode(false);
+    }
+    if(editMode){
+      setEditIdx(-1);
+      setEditMode(false);
+    }
   }
 
   const handleEdit = () => {
@@ -53,10 +63,11 @@ const List = () => {
       const update = todos.filter((todo, index)=> index !== Number(idx));
       window.localStorage.setItem('todos', JSON.stringify(update))
       setListLen(listLen - 1);
-      console.log(todos, update, "handleClick");
     } else {
-      todos.forEach((todo, index) => console.log(index, idx));
-      console.log(todos);
+      handleEdit();
+      setEdit(todos[idx]);
+      setEditMode(true);
+      setEditIdx(Number(idx));
     }
   }
 
@@ -77,7 +88,9 @@ const List = () => {
             <div className="list-items">
               {addMode && <ToDoForm edit={edit} handleChange={handleChange} handleSave={handleSave}/>}
               {todos.length > 0 && todos.map((todo, idx) => {
-                return (
+                if (editMode && idx === editIdx) {
+                  return <ToDoForm key={`todo${idx}`} edit={edit} handleChange={handleChange} handleSave={handleSave}/>}
+                else return (
                 <div key={`todo${idx}`} className="item">
                   <span className="todo-name">{todo}</span>
                   <span className="icons"><i id={`edit-${idx}`} className="fas fa-pencil-alt edit-btn" onClick={handleClick}></i><i className="fas fa-trash-alt delete-btn" id={`delete-${idx}`} onClick={handleClick}></i></span>
