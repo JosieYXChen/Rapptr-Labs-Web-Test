@@ -1,11 +1,11 @@
 import './ToDoForm.css'
 
 const ToDoForm = (props) => {
-
+  const {edit, handleChange} = props;
   return (
-    <div className="item">
-      <input className="edit-name"></input>
-      <button type="button">Save</button>
+    <div className="edit-item">
+      <input name="edit" onChange={handleChange}>{edit}</input>
+      <button className="save-btn" type="button">Save</button>
     </div>
   )
 }

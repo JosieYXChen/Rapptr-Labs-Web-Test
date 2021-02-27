@@ -1,5 +1,6 @@
 import './List.css';
 import { useState, useEffect } from 'react';
+import ToDoForm from './ToDoForm';
 
 
 const seedDummyData = () => {
@@ -8,6 +9,7 @@ const seedDummyData = () => {
 
 const List = () => {
   const [editMode, setEditMode] = useState(false);
+  const [addMode, setAddMode] = useState(false);
   const [todos, setTodos] = useState([]);
   const [listLen, setListLen] = useState(0);
   const [edit, setEdit] = useState("");
@@ -24,12 +26,16 @@ const List = () => {
   },[listLen])
 
   const handleAdd = () => {
-    setEditMode(true);
+    setAddMode(true);
+
+  }
+
+  const handleSave = () => {
 
   }
 
   const handleEdit = () => {
-
+    setEditMode(true);
   }
 
   const handleClick = (event) => {
@@ -44,8 +50,6 @@ const List = () => {
       todos.forEach((todo, index) => console.log(index, idx));
       console.log(todos);
     }
-
-
   }
 
   return (
@@ -60,16 +64,17 @@ const List = () => {
                 <i className="fas fa-search icon"></i>
                 <input placeholder="search" maxLength="25" minLength="1"></input>
               </div>
-              <button type="button" className="button" id="add-btn">New</button>
+              <button type="button" className="button" id="add-btn" onClick={handleAdd}>New</button>
             </div>
             <div className="list-items">
-                {todos.length > 0 && todos.map((todo, idx) => {
-                  return (
-                  <div key={`todo${idx}`} className="item">
-                    <span className="todo-name">{todo}</span>
-                    <span className="icons"><i id={`edit-${idx}`} className="fas fa-pencil-alt edit-btn" onClick={handleClick}></i><i className="fas fa-trash-alt delete-btn" id={`delete-${idx}`} onClick={handleClick}></i></span>
-                  </div>)
-                })}
+              {addMode && <ToDoForm />}
+              {todos.length > 0 && todos.map((todo, idx) => {
+                return (
+                <div key={`todo${idx}`} className="item">
+                  <span className="todo-name">{todo}</span>
+                  <span className="icons"><i id={`edit-${idx}`} className="fas fa-pencil-alt edit-btn" onClick={handleClick}></i><i className="fas fa-trash-alt delete-btn" id={`delete-${idx}`} onClick={handleClick}></i></span>
+                </div>)
+              })}
             </div>
           </div>
         </div>

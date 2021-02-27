@@ -85,10 +85,12 @@
 
 .list-items .item .icons .edit-btn:hover {
   cursor: pointer;
+  color: red;
 }
 
 .list-items .item .icons .delete-btn:hover {
   cursor: pointer;
+  color: red;
 }
 
 @media (max-width: 400px) {
