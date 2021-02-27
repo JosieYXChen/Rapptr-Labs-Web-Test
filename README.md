@@ -1,9 +1,10 @@
 # Getting Started with Rapptr Labs Web Test Project
 
 1. Fork and clone this repo (`https://github.com/JosieYXChen/rapptr-labs-web-test.git`).
-2. Run `npm install`.
-3. Start the build process with: `npm run build` and start the application with `npm run start`.
-4. If you navigate to [localhost:5000](http://localhost:5000), you should see the app where you can login and make your to-do list.
+2. Go to the directory with `cd rapptr-labs-web-test`.
+3. Run `npm install`.
+4. Start the build process with: `npm run build` and start the application with `npm run start`.
+5. If you navigate to [localhost:5000](http://localhost:5000), you should see the app where you can login and make your to-do list.
 
 # Time tracking
 
